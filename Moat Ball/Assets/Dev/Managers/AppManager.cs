@@ -15,54 +15,18 @@ public struct GameSettings
 {
     // Basic Settings
     public int cameraShake;
-    public bool spotlight;
-    public int buffsBeforeHeelFire;
-    public bool fastRing;
-
-    public int botAmount;
-    public bool botsOnly;
-
-    // Weapon Toggles
-    public bool baseballBat;
-    public bool boombox;
-    public bool boxingGlove;
-    public bool explosiveBarrel;
-    public bool ladder;
-    public bool leadPipe;
-    public bool sabre;
-    public bool steelChair;
+    public int numberOfFloorColumns;
+    public int oneSideWidthAtStart;
 
     public GameSettings(
         int cameraShake,
-        bool spotlight,
-        int buffsBeforeHeelFire,
-        bool fastRing,
-        int botAmount,
-        bool botsOnly,
-        bool baseballBat,
-        bool boombox,
-        bool boxingGlove,
-        bool explosiveBarrel,
-        bool ladder,
-        bool leadPipe,
-        bool sabre,
-        bool steelChair
+        int numberOfFloorColumns,
+        int oneSideWidthAtStart
         )
     {
         this.cameraShake = cameraShake;
-        this.spotlight = spotlight;
-        this.buffsBeforeHeelFire = buffsBeforeHeelFire;
-        this.fastRing = fastRing;
-        this.botAmount = botAmount;
-        this.botsOnly = botsOnly;
-        this.baseballBat = baseballBat;
-        this.boombox = boombox;
-        this.boxingGlove = boxingGlove;
-        this.explosiveBarrel = explosiveBarrel;
-        this.ladder = ladder;
-        this.leadPipe = leadPipe;
-        this.sabre = sabre;
-        this.steelChair = steelChair;
+        this.numberOfFloorColumns = numberOfFloorColumns;
+        this.oneSideWidthAtStart = oneSideWidthAtStart;
     }
 }
 
@@ -133,7 +97,7 @@ public class AppManager : MonoBehaviour
     {
         get
         {
-            return Mathf.Min(8, TokenAmount + gameSettings.botAmount);
+            return Mathf.Min(8, TokenAmount);
         }
     }
 
@@ -148,7 +112,7 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5, true, 2, false, 0, false, true, true, true, true, true, true, true, true);
+        gameSettings = new GameSettings(5, 4, 11);
 
         audioSettings = new AudioSettings(10, 10, 10, 10, 10);
 

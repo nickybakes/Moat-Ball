@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private TempSceneSwap tempSceneSwap;
 
     public GameObject playerPrefab;
+    public GameObject floorColumnPrefab;
 
 
     [HideInInspector]
@@ -19,7 +20,18 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<PlayerStatus> eliminatedPlayerStatuses;
 
-    public bool dontUpdateGameplay = true;
+    public bool dontUpdateGameplay;
+
+    private float columnWidth;
+
+    private float moatCenterX;
+
+    private float leftTeamCenterX;
+
+    private float rightTeamCenterX;
+
+    private List<Animator> leftTeamColumns;
+    private List<Animator> rightTeamColumns;
 
 
     // Start is called before the first frame update
@@ -39,12 +51,16 @@ public class GameManager : MonoBehaviour
         alivePlayerStatuses = new List<PlayerStatus>();
         eliminatedPlayerStatuses = new List<PlayerStatus>();
 
+        leftTeamColumns = new List<Animator>();
+        rightTeamColumns = new List<Animator>();
+
         // InitializeCursors();
         // hudManager.cursorPanel.gameObject.SetActive(false);
 
         // if (AppManager.app.RequestedPlayerAmount == 1)
         //     playersInvincible = true;
 
+        SpawnFloorColumns();
         SpawnPlayerPrefabsSimple();
         // MoveAllPlayersToGround();
         // SpawnRing();
@@ -58,16 +74,51 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void CalculateCenterPoints()
+    {
+        leftTeamCenterX = -.5f * (AppManager.app.gameSettings.oneSideWidthAtStart - (leftTeamColumns[0].transform.position.x + columnWidth));
+        rightTeamCenterX = .5f * (AppManager.app.gameSettings.oneSideWidthAtStart + (rightTeamColumns[0].transform.position.x - columnWidth));
+        moatCenterX = .5f * ((rightTeamColumns[0].transform.position.x - columnWidth) + (leftTeamColumns[0].transform.position.x + columnWidth));
+        Debug.Log(leftTeamCenterX + ", " + rightTeamCenterX + ", " + moatCenterX);
+    }
+
+    public void SpawnFloorColumns()
+    {
+        columnWidth = ((float)AppManager.app.gameSettings.oneSideWidthAtStart / (float)AppManager.app.gameSettings.numberOfFloorColumns);
+
+        Debug.Log(columnWidth);
+
+        for (int i = 0; i < AppManager.app.gameSettings.numberOfFloorColumns; i++)
+        {
+            int flip = -1;
+            while (flip <= 1)
+            {
+                Debug.Log(flip * (2 + (columnWidth / 2.0f) * i));
+                GameObject columnObject = GameObject.Instantiate(floorColumnPrefab, new Vector3(flip * ((3 + columnWidth/2.0f) + (columnWidth * i)), 0, 0), Quaternion.identity);
+                columnObject.transform.localScale = new Vector3(columnWidth, 1, 1);
+                if (flip == -1)
+                    leftTeamColumns.Add(columnObject.GetComponent<Animator>());
+                else
+                    rightTeamColumns.Add(columnObject.GetComponent<Animator>());
+
+                flip += 2;
+            }
+        }
+
+        CalculateCenterPoints();
+    }
+
     public void SpawnPlayerPrefabsSimple()
     {
         for (int i = 0; i < AppManager.app.playerTokens.Length; i++)
         {
             if (AppManager.app.playerTokens[i] != null)
             {
+                bool leftSide = i % 2 == 0;
                 PlayerToken token = AppManager.app.playerTokens[i];
                 token.input.SwitchCurrentActionMap("Player");
 
-                GameObject player = Instantiate(playerPrefab, new Vector3(0, 3, 0), Quaternion.identity);
+                GameObject player = Instantiate(playerPrefab, new Vector3(leftSide ? leftTeamCenterX : rightTeamCenterX, 3, 0), Quaternion.identity);
                 PlayerStatus status = token.SetUpPlayerPrefab(player);
 
                 allPlayerStatuses.Add(status);
