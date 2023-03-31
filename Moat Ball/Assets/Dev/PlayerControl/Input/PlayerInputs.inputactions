@@ -1,5 +1,5 @@
 {
-    "name": "StarterAssets",
+    "name": "PlayerInputs",
     "maps": [
         {
             "name": "Player",
@@ -652,6 +652,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DebugStartGame1",
+                    "type": "Button",
+                    "id": "7ab3611c-fdde-4b50-a89c-32f86d6b1a6c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Accept",
                     "type": "Value",
                     "id": "903e0885-d8fa-471d-9bf7-72a9300a8dba",
@@ -1115,6 +1124,39 @@
                     "action": "CursorSnap",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c1f4958e-7d89-48af-9712-fcb1c7172a46",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "DebugStartGame1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "272d89c7-b9b9-4009-b3f0-1d1a3aa9ec65",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "DebugStartGame1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0de89358-112d-4feb-8d83-abe6c987b48f",
+                    "path": "<HID::Logitech Logitech Dual Action>/button10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "DebugStartGame1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

@@ -14,16 +14,27 @@ public class PlayerStatus : MonoBehaviour
 
     public BasicState CurrentPlayerState { get { return currentPlayerState; } }
 
+    public PlayerMaterialHandler materialHandler;
 
-    // Start is called before the first frame update
+    private PlayerMovement movement;
+
+    private new Transform transform;
+
+
+    void Awake()
+    {
+        transform = gameObject.transform;
+        movement = GetComponent<PlayerMovement>();
+
+        movement.Start();
+    }
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        movement.UpdateManual(true, true, true, false);
     }
 }

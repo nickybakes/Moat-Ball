@@ -183,8 +183,8 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="controlRotation">True if the player can change the direction they are facing, regardless of their current velocity</param>
     public void UpdateManual(bool updateMovement, bool controlMovement, bool controlRotation, bool alternateFriction)
     {
-        moveSpeedMultiplier = _status.CurrentPlayerState.moveSpeedMultiplier;
-        extraFallMultiplier = _status.CurrentPlayerState.extraFallGravityMultiplier;
+        moveSpeedMultiplier = 1;
+        extraFallMultiplier = 1;
         if (updateMovement)
         {
             JumpAndGravity(controlMovement);

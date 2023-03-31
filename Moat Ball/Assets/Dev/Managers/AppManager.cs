@@ -189,7 +189,7 @@ public class AppManager : MonoBehaviour
         if (!ableToRemovePlayer)
             return;
 
-        RemovePlayerToken(playerTokens[playerNumber - 1]);
+        RemovePlayerToken(playerTokens[playerNumber]);
         // if (TokenAmount == 0)
         // {
         //     MenuManager.menu.ReturnToTitleScreen();
