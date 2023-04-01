@@ -8,21 +8,48 @@ public class PlayerStatus : MonoBehaviour
     /// <summary>
     /// starts at 0 (0 = player 1);
     /// </summary>
-    public int playerNumber;
+    private int playerNumber = -1;
 
-    private BasicState currentPlayerState;
+    public int PlayerNumber
+    {
+        get => playerNumber;
 
-    public BasicState CurrentPlayerState { get { return currentPlayerState; } }
+        set
+        {
+            if (playerNumber == -1)
+                playerNumber = value;
+        }
+    }
+
+
+    private PlayerStateStats state;
+
+    public PlayerStateStats State { get => state; }
 
     public PlayerMaterialHandler materialHandler;
+
+    public PlayerHeader playerHeader;
+
+    public float chargeAmount;
+    public float chargeMax;
 
     private PlayerMovement movement;
 
     private new Transform transform;
 
+    private PlayerInputs _input;
+
+    public PlayerMovement Movement { get => movement; }
+
 
     void Awake()
     {
+        state = new PlayerStateStats();
+        state.SetStateImmediate(PlayerState.Idle);
+
+        _input = GetComponent<PlayerInputs>();
+
+
         transform = gameObject.transform;
         movement = GetComponent<PlayerMovement>();
 

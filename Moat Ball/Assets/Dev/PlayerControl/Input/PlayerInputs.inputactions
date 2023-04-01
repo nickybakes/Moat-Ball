@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "PickUp",
+                    "name": "Juke",
                     "type": "Value",
                     "id": "4d2d091f-08fd-40d0-9af2-367dbf1fff2b",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Throw",
+                    "name": "Set",
                     "type": "Value",
                     "id": "a204a487-06df-442c-b93f-4f1628d303b6",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "Volley",
                     "type": "Button",
                     "id": "7b741174-bc5e-4e97-b689-6b30264b3610",
                     "expectedControlType": "Button",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DodgeRoll",
+                    "name": "Dive",
                     "type": "Value",
                     "id": "7571721f-bd2c-4045-9e57-714ae76c7105",
                     "expectedControlType": "",
@@ -315,7 +315,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "PickUp",
+                    "action": "Juke",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -326,7 +326,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "PickUp",
+                    "action": "Juke",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -337,7 +337,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "PickUp",
+                    "action": "Juke",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -348,7 +348,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "PickUp",
+                    "action": "Juke",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -359,7 +359,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Throw",
+                    "action": "Set",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -370,7 +370,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Throw",
+                    "action": "Set",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -381,7 +381,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Throw",
+                    "action": "Set",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -392,7 +392,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Throw",
+                    "action": "Set",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -403,7 +403,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Attack",
+                    "action": "Volley",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -414,7 +414,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Attack",
+                    "action": "Volley",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -425,7 +425,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Attack",
+                    "action": "Volley",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -436,7 +436,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Attack",
+                    "action": "Volley",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -447,7 +447,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "DodgeRoll",
+                    "action": "Dive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -458,7 +458,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "DodgeRoll",
+                    "action": "Dive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -469,7 +469,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "DodgeRoll",
+                    "action": "Dive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -480,7 +480,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "DodgeRoll",
+                    "action": "Dive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -491,7 +491,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "DodgeRoll",
+                    "action": "Dive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

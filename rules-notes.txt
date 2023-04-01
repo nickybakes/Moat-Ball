@@ -1,0 +1,7 @@
+(strike) volley -> charge up (cant move), let go to release. if release in air its a spike
+set -> press once. stop players velocity
+(strike) juke -> charge up (cant move), let go to release.
+
+dive -> go forward a bit, then still recovery
+if had charge up meter when diving, enable small hitbox for ball and release hit if collided, no dive recovery after. if no collided, then go to dive recovery and lose charge
+if no charge up meter, any strike input during dive is a set, then still go into dive recovery

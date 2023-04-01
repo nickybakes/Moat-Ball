@@ -111,7 +111,7 @@ public class PlayerToken : MonoBehaviour
         // player.transform.GetChild((int)PlayerChild.Model).GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
         // player.transform.GetChild((int)PlayerChild.Model).GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", colors[playerNumber - 1]);
 
-        status.playerNumber = playerNumber;
+        status.PlayerNumber = playerNumber;
 
         return status;
     }
@@ -190,19 +190,19 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp.OnJump(value);
     }
 
-    public void OnDodgeRoll(InputValue value)
+    public void OnDive(InputValue value)
     {
-        playerPrefabInputsComp.OnDodgeRoll(value);
+        playerPrefabInputsComp.OnDive(value);
     }
 
-    public void OnPickUp(InputValue value)
+    public void OnJuke(InputValue value)
     {
-        playerPrefabInputsComp.OnPickUp(value);
+        playerPrefabInputsComp.OnJuke(value);
     }
 
-    public void OnAttack(InputValue value)
+    public void OnVolley(InputValue value)
     {
-        playerPrefabInputsComp.OnAttack(value);
+        playerPrefabInputsComp.OnVolley(value);
     }
 
     public void OnBlock(InputValue value)
@@ -211,8 +211,8 @@ public class PlayerToken : MonoBehaviour
 
     }
 
-    public void OnThrow(InputValue value)
+    public void OnSet(InputValue value)
     {
-        playerPrefabInputsComp.OnThrow(value);
+        playerPrefabInputsComp.OnSet(value);
     }
 }

@@ -1,99 +1,77 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum ButtonInput
+{
+    Jump,
+    Volley,
+    Set,
+    Juke,
+    Dive
+}
+
 public class PlayerInputs : MonoBehaviour
 {
     [Header("Character Input Values")]
     public Vector2 move;
 
-    // private bool jump;
+    private bool[] buttonPressedRaw = new bool[5];
 
-    //true if the player was holding jump in the previous frame
-    // private bool wasJumping;
+    private float[] timeSinceButtonPress = new float[5];
 
-    private float timeSinceJumpWasPressed;
-    private float timeSinceJumpWasPressedMax = .24f;
-
-    private float timeSinceAttackWasPressed;
-    private float timeSinceAttackWasPressedMax = .24f;
-
-
-    // Combat Controls
-    public bool attack;
-    public bool pickUpPressed;
-    public bool wasPickUpPressed;
-
-    public bool throwIsHeld;
-    public bool throwWasHeld;
-
-    public bool dodgeRoll;
-
-    public bool wasDodgeRolling;
-
-    public bool block;
-    public bool wasBlocking;
-
-    [Header("Movement Settings")]
-    public bool analogMovement;
+    private const float timeSinceButtonPressMax = .24f;
 
     public bool pause;
 
-    // [Header("Mouse Cursor Settings")]
-    // public bool cursorLocked = true;
-    // public bool cursorInputForLook = true;
-
-    public bool Jump
+    public bool GetInputRaw(ButtonInput input, bool resetButtonIfPressed = false)
     {
-        get
+        if (resetButtonIfPressed && buttonPressedRaw[(int)input])
         {
-            return timeSinceJumpWasPressed < timeSinceJumpWasPressedMax;
+            SetInputRaw(input, false);
+            return true;
         }
+        return buttonPressedRaw[(int)input];
+    }
 
-        set
+    public void SetInputRaw(ButtonInput input, bool pressed)
+    {
+        buttonPressedRaw[(int)input] = pressed;
+    }
+
+    public bool GetInputWithBuffer(ButtonInput input, bool resetButtonIfPressed = false)
+    {
+        if (resetButtonIfPressed && timeSinceButtonPress[(int)input] < timeSinceButtonPressMax)
         {
-            if (value)
-            {
-                timeSinceJumpWasPressed = 0;
-            }
-            else
-            {
-                timeSinceJumpWasPressed = timeSinceJumpWasPressedMax;
-            }
+            SetInputWithBuffer(input, false);
+            return true;
+        }
+        return timeSinceButtonPress[(int)input] < timeSinceButtonPressMax;
+    }
+
+    public void SetInputWithBuffer(ButtonInput input, bool pressed)
+    {
+        if (pressed)
+        {
+            timeSinceButtonPress[(int)input] = 0;
+        }
+        else
+        {
+            timeSinceButtonPress[(int)input] = timeSinceButtonPressMax;
         }
     }
 
     public int jumpFrameDisable = 2;
-
-    public bool Attack
-    {
-        get
-        {
-            return timeSinceAttackWasPressed < timeSinceAttackWasPressedMax;
-        }
-
-        set
-        {
-            if (value)
-            {
-                timeSinceAttackWasPressed = 0;
-            }
-            else
-            {
-                timeSinceAttackWasPressed = timeSinceAttackWasPressedMax;
-            }
-        }
-    }
 
     private void Update()
     {
         if (jumpFrameDisable < 2)
             jumpFrameDisable++;
 
-        if (timeSinceJumpWasPressed <= timeSinceJumpWasPressedMax)
-            timeSinceJumpWasPressed += Time.deltaTime;
-
-        if (timeSinceAttackWasPressed <= timeSinceAttackWasPressedMax)
-            timeSinceAttackWasPressed += Time.deltaTime;
+        for (int i = 0; i < timeSinceButtonPress.Length; i++)
+        {
+            if (timeSinceButtonPress[i] <= timeSinceButtonPressMax)
+                timeSinceButtonPress[i] += Time.deltaTime;
+        }
     }
 
 
@@ -112,19 +90,19 @@ public class PlayerInputs : MonoBehaviour
         JumpInput(value.isPressed);
     }
 
-    public void OnDodgeRoll(InputValue value)
+    public void OnDive(InputValue value)
     {
-        DodgeRollInput(value.isPressed);
+        DiveInput(value.isPressed);
     }
 
-    public void OnPickUp(InputValue value)
+    public void OnJuke(InputValue value)
     {
-        PickUpInput(value.isPressed);
+        JukeInput(value.isPressed);
     }
 
-    public void OnAttack(InputValue value)
+    public void OnVolley(InputValue value)
     {
-        AttackInput(value.isPressed);
+        VolleyInput(value.isPressed);
     }
 
     public void OnBlock(InputValue value)
@@ -132,49 +110,41 @@ public class PlayerInputs : MonoBehaviour
         BlockInput(value.isPressed);
     }
 
-    public void PauseInput(bool newPauseState)
+    public void PauseInput(bool newState)
     {
-        if (newPauseState)
+        if (newState)
         {
             // GameManager.PauseGame();
         }
     }
 
-    public void BlockInput(bool newBlockState)
+    public void BlockInput(bool newState)
     {
-        wasBlocking = block;
-        block = newBlockState;
+        // wasBlocking = block;
+        // block = newBlockState;
     }
 
-    public void AttackInput(bool newAttackState)
+    public void VolleyInput(bool newState)
     {
-        if (newAttackState)
-            Attack = true;
+        SetInputRaw(ButtonInput.Volley, newState);
+        SetInputWithBuffer(ButtonInput.Volley, newState);
     }
 
-    public void PickUpInput(bool newPickUpState)
+    public void JukeInput(bool newState)
     {
-        wasPickUpPressed = pickUpPressed;
-        pickUpPressed = newPickUpState;
+        SetInputRaw(ButtonInput.Juke, newState);
+        SetInputWithBuffer(ButtonInput.Juke, newState);
     }
 
-    public void OnThrow(InputValue value)
+    public void OnSet(InputValue value)
     {
-        /*if (value.isPressed) // Key pressed
-        {
-            throwIsHeld = true;
-        }
-        if (value.isPressed == false) // Key released
-        {
-            throwIsHeld = false;
-        }*/
-        ThrowInput(value.isPressed);
+        SetInput(value.isPressed);
     }
 
-    public void ThrowInput(bool newThrowState)
+    public void SetInput(bool newState)
     {
-        throwWasHeld = throwIsHeld;
-        throwIsHeld = newThrowState;
+        SetInputRaw(ButtonInput.Set, newState);
+        SetInputWithBuffer(ButtonInput.Set, newState);
     }
 
     public void MoveInput(Vector2 newMoveDirection)
@@ -182,27 +152,19 @@ public class PlayerInputs : MonoBehaviour
         move = newMoveDirection;
     }
 
-    public void JumpInput(bool newJumpState)
+    public void JumpInput(bool newState)
     {
-        // wasJumping = jump;
-        // jump = newJumpState;
-        if (newJumpState && jumpFrameDisable >= 2)
-            Jump = true;
+        if (newState && jumpFrameDisable >= 2)
+        {
+            SetInputRaw(ButtonInput.Jump, newState);
+            SetInputWithBuffer(ButtonInput.Jump, newState);
+        }
     }
 
-    public void DodgeRollInput(bool newDodgeRollState)
+    public void DiveInput(bool newState)
     {
-        wasDodgeRolling = dodgeRoll;
-        dodgeRoll = newDodgeRollState;
+        SetInputRaw(ButtonInput.Dive, newState);
+        SetInputWithBuffer(ButtonInput.Dive, newState);
     }
 
-    // private void OnApplicationFocus(bool hasFocus)
-    // {
-    //     SetCursorState(cursorLocked);
-    // }
-
-    // private void SetCursorState(bool newState)
-    // {
-    //     Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-    // }
 }

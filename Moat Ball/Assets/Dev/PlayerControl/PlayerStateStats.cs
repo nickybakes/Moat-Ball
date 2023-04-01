@@ -9,7 +9,7 @@ public enum StateSection
     Recovery
 }
 
-public class PlayerStateStats : MonoBehaviour
+public class PlayerStateStats
 {
     private PlayerState currentState;
     private BasicState currentStateClass;

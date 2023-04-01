@@ -7,7 +7,7 @@ public enum PlayerState
     Idle
 }
 
-public class StateManager : MonoBehaviour
+public class StateManager
 {
     private static BasicState[] states = {
         

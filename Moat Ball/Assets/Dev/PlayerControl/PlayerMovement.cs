@@ -438,11 +438,10 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Jump
-            if (controlMovement && _input.Jump)
+            if (controlMovement && _input.GetInputWithBuffer(ButtonInput.Jump, true))
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                _input.Jump = false;
                 grounded = false;
                 roadRunnerJumpAvailable = false;
 
@@ -463,7 +462,7 @@ public class PlayerMovement : MonoBehaviour
             //increment time in air
             timeInAir += Time.deltaTime;
 
-            if (controlMovement && _input.Jump)
+            if (controlMovement && _input.GetInputWithBuffer(ButtonInput.Jump, true))
             {
                 // allow player to Jump with road runner time
                 if (roadRunnerJumpAvailable && timeInAir < roadRunnerTimeMax)
@@ -471,8 +470,6 @@ public class PlayerMovement : MonoBehaviour
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                     roadRunnerJumpAvailable = false;
-                    _input.Jump = false;
-
                     // AudioManager.aud.Play("jump", 0.8f, 1.2f);
                 }
                 // Double jump if possible
