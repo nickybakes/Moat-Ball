@@ -30,6 +30,7 @@ public class PlayerInputs : MonoBehaviour
             SetInputRaw(input, false);
             return true;
         }
+
         return buttonPressedRaw[(int)input];
     }
 

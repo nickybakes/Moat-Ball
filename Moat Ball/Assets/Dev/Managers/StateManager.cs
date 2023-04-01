@@ -4,14 +4,15 @@ using UnityEngine;
 
 public enum PlayerState
 {
-    Idle
+    Idle,
+    Dive
 }
 
 public class StateManager
 {
     private static BasicState[] states = {
-        
-
+        new Idle(),
+        new Dive()
 
     };
 

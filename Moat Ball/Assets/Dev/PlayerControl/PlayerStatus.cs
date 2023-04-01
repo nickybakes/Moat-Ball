@@ -44,8 +44,7 @@ public class PlayerStatus : MonoBehaviour
 
     void Awake()
     {
-        state = new PlayerStateStats();
-        state.SetStateImmediate(PlayerState.Idle);
+        state = new PlayerStateStats(this);
 
         _input = GetComponent<PlayerInputs>();
 
@@ -54,14 +53,27 @@ public class PlayerStatus : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
 
         movement.Start();
-    }
-    void Start()
-    {
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement.UpdateManual(true, true, true, false);
+        movement.UpdateManual(state.details.updateMovement, state.details.canPlayerControlMove, state.details.canPlayerControlRotate, state.details.alternateFriction);
+
+        state.Update();
+
+        if (_input.GetInputRaw(ButtonInput.Dive, true) && state.ActionAvailable(PlayerAction.Dive))
+        {
+            Dive();
+        }
+    }
+
+    public void Dive()
+    {
+        state.SetStateImmediate(PlayerState.Dive);
+        Movement.SetTheSetForwardDirection();
+        Movement.SetVelocityToMoveSpeedTimesFowardDirection();
     }
 }

@@ -250,17 +250,17 @@ public class PlayerCursor : MonoBehaviour
                         _input.snapState.isSnapping = false;
                     }
 
-                    if (_input.customize && !_input.wasCustomize && MenuManager.menu && MenuManager.menu.OnJoinScreen())
-                    {
-                        _input.customize = false;
-                        IsCustomizing = true;
-                    }
+                    // if (_input.customize && !_input.wasCustomize && MenuManager.menu && MenuManager.menu.OnJoinScreen())
+                    // {
+                    //     _input.customize = false;
+                    //     IsCustomizing = true;
+                    // }
 
-                    if (_input.randomize && !_input.wasRandomize && MenuManager.menu)
-                    {
-                        MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
-                        _input.randomize = false;
-                    }
+                    // if (_input.randomize && !_input.wasRandomize && MenuManager.menu)
+                    // {
+                    //     MenuManager.menu.customizationPanels[playerNumber - 1].RandomizeSaveImmediately();
+                    //     _input.randomize = false;
+                    // }
                 }
             }
         }

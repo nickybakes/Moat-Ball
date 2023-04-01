@@ -82,6 +82,11 @@ public class PlayerHeader : MonoBehaviour
         tr.position = position;
     }
 
+    public void SetStateText(string text)
+    {
+        stateText.text = text;
+    }
+
     // public void SetWeaponText(string weaponName)
     // {
     //     if (weaponName == "")
