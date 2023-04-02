@@ -38,7 +38,7 @@ public class PlayerHeader : MonoBehaviour
     {
         playerStatus = status;
         canvas = c;
-        playerStatus.playerHeader = this;
+        playerStatus.header = this;
         playerTransform = playerStatus.transform;
         tr = transform;
         playerNumberText.text = "" + playerStatus.PlayerNumber;
@@ -53,7 +53,7 @@ public class PlayerHeader : MonoBehaviour
 
     public void UpdateChargeMeter()
     {
-        if (playerStatus.chargeAmount == 0)
+        if (playerStatus.ChargeAmount == 0)
         {
             chargeMeterBackground.gameObject.SetActive(false);
             return;
@@ -64,7 +64,7 @@ public class PlayerHeader : MonoBehaviour
         }
 
         float width = chargeMeterBackgroundRect.rect.width;
-        float chargePercentage = playerStatus.chargeAmount / playerStatus.chargeMax;
+        float chargePercentage = playerStatus.ChargeAmount / PlayerStatus.chargeMax;
 
         //DECREASES BARS FROM THE LEFT SIDE
         chargeMeterFillRect.SetInsetAndSizeFromParentEdge(

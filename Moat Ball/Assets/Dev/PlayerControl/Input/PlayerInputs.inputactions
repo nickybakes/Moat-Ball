@@ -43,12 +43,12 @@
                 },
                 {
                     "name": "Volley",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "7b741174-bc5e-4e97-b689-6b30264b3610",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Dive",

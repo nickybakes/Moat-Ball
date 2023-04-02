@@ -28,10 +28,21 @@ public class PlayerStatus : MonoBehaviour
 
     public PlayerMaterialHandler materialHandler;
 
-    public PlayerHeader playerHeader;
+    public PlayerHeader header;
 
-    public float chargeAmount;
-    public float chargeMax;
+    private float chargeAmount;
+
+    public float ChargeAmount
+    {
+        get => chargeAmount;
+        set
+        {
+            chargeAmount = Mathf.Clamp(value, 0, chargeMax);
+            header.UpdateChargeMeter();
+        }
+    }
+
+    public const float chargeMax = 1;
 
     private PlayerMovement movement;
 
@@ -64,10 +75,30 @@ public class PlayerStatus : MonoBehaviour
 
         state.Update();
 
+        if (_input.GetInputRaw(ButtonInput.Volley) && state.ActionAvailable(PlayerAction.Volley))
+        {
+            StartVolleyCharge();
+        }
+
+        if (state.Current == PlayerState.Volley && state.sectionCurrent == 0 && !_input.GetInputRaw(ButtonInput.Volley))
+        {
+            InputEndVolleyCharge();
+        }
+
         if (_input.GetInputRaw(ButtonInput.Dive, true) && state.ActionAvailable(PlayerAction.Dive))
         {
             Dive();
         }
+    }
+
+    public void StartVolleyCharge()
+    {
+        state.SetStateImmediate(PlayerState.Volley);
+    }
+
+    public void InputEndVolleyCharge()
+    {
+        state.SetSection(1, 0);
     }
 
     public void Dive()

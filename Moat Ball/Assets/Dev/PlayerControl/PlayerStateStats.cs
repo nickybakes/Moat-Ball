@@ -42,12 +42,12 @@ public class PlayerStateStats
     private PlayerState currentState;
     private BasicState currentStateClass;
 
-    public BasicState Current { get => currentStateClass; }
+    public PlayerState Current { get => currentState; }
 
     public float timeInState;
     public float timeInSection;
 
-    public int currentSection;
+    public int sectionCurrent;
 
     public float[] customSectionTimes;
 
@@ -64,8 +64,9 @@ public class PlayerStateStats
         currentStateClass.OnExitThisState(state, this);
         BasicState nextState = StateManager.GetState(state);
         nextState.OnEnterThisState(currentState, this);
+        currentState = state;
         currentStateClass = nextState;
-        status.playerHeader.SetStateText(currentStateClass.stateText);
+        status.header.SetStateText(currentStateClass.stateText);
         SetSection(0, -1);
         timeInSection = 0;
         timeInState = 0;
@@ -76,15 +77,15 @@ public class PlayerStateStats
 
         float[] sectionTimes = currentStateClass.useCustomSectionTimes ? customSectionTimes : currentStateClass.SectionTimes();
 
-        if (sectionTimes[currentSection] != -1 && timeInSection > sectionTimes[currentSection])
+        if (sectionTimes[sectionCurrent] != -1 && timeInSection > sectionTimes[sectionCurrent])
         {
-            if (currentSection == sectionTimes.Length - 1)
+            if (sectionCurrent == sectionTimes.Length - 1)
             {
                 SetStateImmediate(currentStateClass.nextState);
             }
             else
             {
-                SetSection(currentSection + 1, currentSection);
+                SetSection(sectionCurrent + 1, sectionCurrent);
             }
         }
 
@@ -97,7 +98,7 @@ public class PlayerStateStats
     {
         currentStateClass.StoreSectionDetails(section, this);
         currentStateClass.SetSection(section, prevSection, this);
-        currentSection = section;
+        sectionCurrent = section;
         timeInSection = 0;
     }
 

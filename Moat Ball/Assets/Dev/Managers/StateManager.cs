@@ -5,15 +5,16 @@ using UnityEngine;
 public enum PlayerState
 {
     Idle,
-    Dive
+    Dive,
+    Volley
 }
 
 public class StateManager
 {
     private static BasicState[] states = {
         new Idle(),
-        new Dive()
-
+        new Dive(),
+        new Volley()
     };
 
     public static BasicState GetState(PlayerState state)

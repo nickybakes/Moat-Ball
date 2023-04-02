@@ -7,16 +7,14 @@ public class Dive : BasicState
     public Dive()
     {
         sectionTimes = new float[] { .20f, .26f };
-        canPlayerControlMove = new bool[] { false, false };
-        canPlayerControlRotate = new bool[] { false, false };
-        updateMovement = new bool[] { true, true };
-        alternateFriction = new bool[] { false, false };
+        canPlayerControlMove = new bool[] { false };
+        canPlayerControlRotate = new bool[] { false };
+        updateMovement = new bool[] { true };
+        alternateFriction = new bool[] { false };
         moveSpeedMultiplier = new float[] { 1.4f, .6f };
         extraFallGravityMultiplier = new float[] { .8f, 1 };
         actionAvailable = new bool[][] {
-            new bool[] { false, true, true, true, false },
-            new bool[] { false, true, true, true, false },
-
+            new bool[] { false, false, true, false, false },
             };
 
         nextState = PlayerState.Idle;
@@ -26,7 +24,7 @@ public class Dive : BasicState
 
     public override void Update(PlayerStateStats stats)
     {
-        switch (stats.currentSection)
+        switch (stats.sectionCurrent)
         {
             case (0):
                 stats.Status.Movement.SetVelocityToMoveSpeedTimesFowardDirection();
@@ -41,8 +39,17 @@ public class Dive : BasicState
         }
     }
 
+    public override void OnExitThisState(PlayerState nextState, PlayerStateStats stats)
+    {
+        base.OnExitThisState(nextState, stats);
+
+    }
+
     public override void SetSection(int section, int prevSection, PlayerStateStats stats)
     {
         stats.Status.Movement.velocity = stats.Status.Movement.velocity.normalized * stats.Status.Movement.CurrentMoveSpeed;
+
+        if(section == 1)
+            stats.Status.ChargeAmount = 0; 
     }
 }
