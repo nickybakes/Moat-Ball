@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Tag
+{
+    Player,
+    PickUp,
+    UICursor,
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager game;
@@ -13,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject floorColumnPrefab;
+
+    public GameObject ballPrefab;
 
 
     [HideInInspector]
@@ -28,6 +37,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<PlayerStatus> rightTeamPlayerStatuses;
 
+    private List<Ball> ball;
+
     public bool dontUpdateGameplay;
 
     private float columnWidth;
@@ -38,8 +49,8 @@ public class GameManager : MonoBehaviour
 
     private float rightTeamCenterX;
 
-    private List<Animator> leftTeamColumns;
-    private List<Animator> rightTeamColumns;
+    private List<FloorColumn> leftTeamColumns;
+    private List<FloorColumn> rightTeamColumns;
 
 
     // Start is called before the first frame update
@@ -62,8 +73,8 @@ public class GameManager : MonoBehaviour
         leftTeamPlayerStatuses = new List<PlayerStatus>();
         rightTeamPlayerStatuses = new List<PlayerStatus>();
 
-        leftTeamColumns = new List<Animator>();
-        rightTeamColumns = new List<Animator>();
+        leftTeamColumns = new List<FloorColumn>();
+        rightTeamColumns = new List<FloorColumn>();
 
         // InitializeCursors();
         // hudManager.cursorPanel.gameObject.SetActive(false);
@@ -97,6 +108,9 @@ public class GameManager : MonoBehaviour
     {
         columnWidth = ((float)AppManager.app.gameSettings.oneSideWidthAtStart / (float)AppManager.app.gameSettings.numberOfFloorColumns);
 
+        FloorColumn centerCollider = GameObject.Instantiate(floorColumnPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<FloorColumn>();
+        centerCollider.transform.localScale = new Vector3(6, 1, 1);
+        centerCollider.RemoveFloorImmediate();
 
         for (int i = 0; i < AppManager.app.gameSettings.numberOfFloorColumns; i++)
         {
@@ -106,9 +120,12 @@ public class GameManager : MonoBehaviour
                 GameObject columnObject = GameObject.Instantiate(floorColumnPrefab, new Vector3(flip * ((3 + columnWidth / 2.0f) + (columnWidth * i)), 0, 0), Quaternion.identity);
                 columnObject.transform.localScale = new Vector3(columnWidth, 1, 1);
                 if (flip == -1)
-                    leftTeamColumns.Add(columnObject.GetComponent<Animator>());
+                {
+                    leftTeamColumns.Add(columnObject.GetComponent<FloorColumn>());
+                    leftTeamColumns[leftTeamColumns.Count - 1].pushLeft = true;
+                }
                 else
-                    rightTeamColumns.Add(columnObject.GetComponent<Animator>());
+                    rightTeamColumns.Add(columnObject.GetComponent<FloorColumn>());
 
                 flip += 2;
             }
@@ -119,17 +136,17 @@ public class GameManager : MonoBehaviour
     {
         CalculateCenterPoints();
         float zStart = 3.0f;
-        float playerSeparation = 2.0f*zStart/(float)leftTeamPlayerStatuses.Count;
+        float playerSeparation = 2.0f * zStart / (float)leftTeamPlayerStatuses.Count;
         for (int i = 0; i < leftTeamPlayerStatuses.Count; i++)
         {
-            leftTeamPlayerStatuses[i].transform.position = new Vector3(leftTeamCenterX, 1, zStart - (playerSeparation*.5f) - (i*playerSeparation));
+            leftTeamPlayerStatuses[i].transform.position = new Vector3(leftTeamCenterX, 1, zStart - (playerSeparation * .5f) - (i * playerSeparation));
             leftTeamPlayerStatuses[i].transform.rotation = Quaternion.Euler(0, 90, 0);
             leftTeamPlayerStatuses[i].gameObject.SetActive(true);
         }
-        playerSeparation = 2.0f*zStart/(float)rightTeamPlayerStatuses.Count;
+        playerSeparation = 2.0f * zStart / (float)rightTeamPlayerStatuses.Count;
         for (int i = 0; i < rightTeamPlayerStatuses.Count; i++)
         {
-            rightTeamPlayerStatuses[i].transform.position = new Vector3(rightTeamCenterX, 1, zStart - (playerSeparation*.5f) - (i*playerSeparation));
+            rightTeamPlayerStatuses[i].transform.position = new Vector3(rightTeamCenterX, 1, zStart - (playerSeparation * .5f) - (i * playerSeparation));
             rightTeamPlayerStatuses[i].transform.rotation = Quaternion.Euler(0, -90, 0);
             rightTeamPlayerStatuses[i].gameObject.SetActive(true);
         }
