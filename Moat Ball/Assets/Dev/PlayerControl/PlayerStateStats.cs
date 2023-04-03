@@ -18,6 +18,7 @@ public struct StateDetails
     public float moveSpeedMultiplier;
     public float extraFallGravityMultiplier;
     public bool[] actionAvailable;
+    public bool[] countCooldown;
 
     public StateDetails(bool updateMovement, bool canPlayerControlMove, bool canPlayerControlRotate, bool alternateFriction, float moveSpeedMultiplier, float extraFallGravityMultiplier)
     {
@@ -28,6 +29,7 @@ public struct StateDetails
         this.moveSpeedMultiplier = moveSpeedMultiplier;
         this.extraFallGravityMultiplier = extraFallGravityMultiplier;
         this.actionAvailable = new bool[] { true, true, true, true, true };
+        this.countCooldown = new bool[] { true, true };
     }
 
 }

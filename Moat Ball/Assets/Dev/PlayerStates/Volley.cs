@@ -16,6 +16,10 @@ public class Volley : BasicState
             new bool[] { true, false, false, false, true },
             };
 
+        countCooldown = new bool[][] {
+            new bool[] { false, false },
+            };
+
         nextState = PlayerState.Idle;
 
         stateText = "Volley";
@@ -43,6 +47,7 @@ public class Volley : BasicState
     {
         base.OnExitThisState(nextState, stats);
         stats.Status.DisableVolleyHitbox();
+        stats.Status.RestartCooldown(Cooldown.Attack);
         if (nextState != PlayerState.Dive)
         {
             stats.Status.ChargeAmount = 0;

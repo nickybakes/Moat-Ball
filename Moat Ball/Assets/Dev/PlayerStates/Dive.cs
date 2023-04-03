@@ -17,6 +17,10 @@ public class Dive : BasicState
             new bool[] { false, false, true, false, false },
             };
 
+        countCooldown = new bool[][] {
+            new bool[] { false, false },
+            };
+
         nextState = PlayerState.Idle;
 
         stateText = "Dive";
@@ -42,7 +46,7 @@ public class Dive : BasicState
     public override void OnExitThisState(PlayerState nextState, PlayerStateStats stats)
     {
         base.OnExitThisState(nextState, stats);
-
+        stats.Status.RestartCooldown(Cooldown.Dive);
     }
 
     public override void SetSection(int section, int prevSection, PlayerStateStats stats)

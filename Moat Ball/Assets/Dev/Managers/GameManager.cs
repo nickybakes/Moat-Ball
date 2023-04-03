@@ -7,6 +7,7 @@ public enum Tag
     Player,
     PickUp,
     UICursor,
+    Ball
 }
 
 public class GameManager : MonoBehaviour
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<PlayerStatus> rightTeamPlayerStatuses;
 
-    private List<Ball> ball;
+    private List<Ball> balls;
 
     public bool dontUpdateGameplay;
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
     private float leftTeamCenterX;
 
     private float rightTeamCenterX;
+
+    private int previousLoserTeam = 0;
 
     private List<FloorColumn> leftTeamColumns;
     private List<FloorColumn> rightTeamColumns;
@@ -76,6 +79,10 @@ public class GameManager : MonoBehaviour
         leftTeamColumns = new List<FloorColumn>();
         rightTeamColumns = new List<FloorColumn>();
 
+        balls = new List<Ball>();
+
+        InstantiateBalls();
+
         // InitializeCursors();
         // hudManager.cursorPanel.gameObject.SetActive(false);
 
@@ -84,6 +91,7 @@ public class GameManager : MonoBehaviour
 
         SpawnFloorColumns();
         SpawnPlayerPrefabsSimple();
+        RespawnBalls(0);
         // MoveAllPlayersToGround();
         // SpawnRing();
 
@@ -94,6 +102,25 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void InstantiateBalls()
+    {
+        for (int i = 0; i < AppManager.app.gameSettings.numberOfBalls; i++)
+        {
+            GameObject g = GameObject.Instantiate(ballPrefab);
+            Ball b = g.GetComponent<Ball>();
+            balls.Add(b);
+        }
+    }
+
+    public void RespawnBalls(int previousLoser)
+    {
+        for (int i = 0; i < balls.Count; i++)
+        {
+            balls[i].Reset();
+            balls[i].transform.position = new Vector3(leftTeamCenterX, 2, 0);
+        }
     }
 
     public void CalculateCenterPoints()

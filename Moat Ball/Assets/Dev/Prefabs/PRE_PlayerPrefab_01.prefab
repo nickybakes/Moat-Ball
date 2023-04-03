@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1348006507101000118}
   m_Layer: 3
   m_Name: PRE_PlayerPrefab_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 206624740121840172}
   - component: {fileID: 647082498276266863}
   - component: {fileID: 862670408456343050}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Volley Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

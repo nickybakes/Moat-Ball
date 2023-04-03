@@ -17,16 +17,22 @@ public struct GameSettings
     public int cameraShake;
     public int numberOfFloorColumns;
     public int oneSideWidthAtStart;
+    public int numberOfBalls;
+    public int allowedBounces;
 
     public GameSettings(
         int cameraShake,
         int numberOfFloorColumns,
-        int oneSideWidthAtStart
+        int oneSideWidthAtStart,
+        int numberOfBalls,
+        int numAllowedBounces
         )
     {
         this.cameraShake = cameraShake;
         this.numberOfFloorColumns = numberOfFloorColumns;
         this.oneSideWidthAtStart = oneSideWidthAtStart;
+        this.numberOfBalls = numberOfBalls;
+        this.allowedBounces = numAllowedBounces;
     }
 }
 
@@ -112,7 +118,7 @@ public class AppManager : MonoBehaviour
 
         playerTokens = new PlayerToken[8];
 
-        gameSettings = new GameSettings(5, 4, 11);
+        gameSettings = new GameSettings(5, 4, 11, 1, 1);
 
         audioSettings = new AudioSettings(10, 10, 10, 10, 10);
 

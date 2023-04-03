@@ -12,11 +12,8 @@ public enum PlayerAction
 }
 
 /// <summary>
-///Jump,
-///Volley,
-///Set,
-///Juke,
-///Dive
+///ACTIONS: Jump, Volley, Set, Juke, Dive
+///COOLDOWNS: attack, dive
 /// </summary>
 public class BasicState
 {
@@ -41,6 +38,7 @@ public class BasicState
 
     protected float[] extraFallGravityMultiplier = { 1 };
     protected bool[][] actionAvailable = { new bool[] { true, true, true, true, true } };
+    protected bool[][] countCooldown = { new bool[] { true, true } };
 
 
 
@@ -92,6 +90,11 @@ public class BasicState
         for (int i = 0; i < stats.details.actionAvailable.Length; i++)
         {
             stats.details.actionAvailable[i] = actionAvailable[Mathf.Min(section, actionAvailable.Length - 1)][i];
+        }
+
+        for (int i = 0; i < stats.details.countCooldown.Length; i++)
+        {
+            stats.details.countCooldown[i] = countCooldown[Mathf.Min(section, countCooldown.Length - 1)][i];
         }
     }
 
