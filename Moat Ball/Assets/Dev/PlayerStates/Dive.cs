@@ -49,7 +49,10 @@ public class Dive : BasicState
     {
         stats.Status.Movement.velocity = stats.Status.Movement.velocity.normalized * stats.Status.Movement.CurrentMoveSpeed;
 
-        if(section == 1)
-            stats.Status.ChargeAmount = 0; 
+        if (section == 1)
+        {
+            stats.Status.ChargeAmount = 0;
+            stats.Status.DisableVolleyHitbox();
+        }
     }
 }

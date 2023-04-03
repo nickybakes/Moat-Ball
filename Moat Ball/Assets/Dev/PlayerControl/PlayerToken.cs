@@ -96,7 +96,8 @@ public class PlayerToken : MonoBehaviour
         playerPrefabInputsComp = player.GetComponent<PlayerInputs>();
         PlayerStatus status = player.GetComponent<PlayerStatus>();
 
-        status.materialHandler.SetMaterialColorByIndex(playerNumber);
+        status.materialHandler.SetMaterialColorByPlayerNumber(playerNumber);
+        status.hitbox.SetMaterialColor(playerNumber);
 
         // OutlineSketchUpdate outline = player.GetComponentInChildren<OutlineSketchUpdate>();
 

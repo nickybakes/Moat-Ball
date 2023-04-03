@@ -28,7 +28,10 @@ public class PlayerStatus : MonoBehaviour
 
     public PlayerMaterialHandler materialHandler;
 
+    [HideInInspector]
     public PlayerHeader header;
+
+    public Hitbox hitbox;
 
     private float chargeAmount;
 
@@ -89,6 +92,16 @@ public class PlayerStatus : MonoBehaviour
         {
             Dive();
         }
+    }
+
+    public void EnableVolleyHitbox()
+    {
+        hitbox.gameObject.SetActive(true);
+    }
+
+    public void DisableVolleyHitbox()
+    {
+        hitbox.gameObject.SetActive(false);
     }
 
     public void StartVolleyCharge()
