@@ -30,6 +30,18 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    private int team = -1;
+    public int Team
+    {
+        get => team;
+
+        set
+        {
+            if (team == -1)
+                team = value;
+        }
+    }
+
 
     private PlayerStateStats state;
 
@@ -128,12 +140,12 @@ public class PlayerStatus : MonoBehaviour
 
     public void EnableVolleyHitbox()
     {
-        hitbox.gameObject.SetActive(true);
+        hitbox.EnableForHit();
     }
 
     public void DisableVolleyHitbox()
     {
-        hitbox.gameObject.SetActive(false);
+        hitbox.Disable();
     }
 
     public void StartVolleyCharge()

@@ -49,7 +49,13 @@ public class GameManager : MonoBehaviour
 
     private float leftTeamCenterX;
 
+    public static float LeftTeamCenterX { get => game.leftTeamCenterX; }
+    public static float LeftTeamEdge {get => (game.leftTeamColumns[0].transform.position.x + game.columnWidth);}
+
     private float rightTeamCenterX;
+    public static float RightTeamCenterX { get => game.rightTeamCenterX; }
+    public static float RightTeamEdge {get => (game.rightTeamColumns[0].transform.position.x - game.columnWidth);}
+
 
     private int previousLoserTeam = 0;
 
@@ -194,6 +200,7 @@ public class GameManager : MonoBehaviour
 
                 GameObject player = Instantiate(playerPrefab);
                 PlayerStatus status = token.SetUpPlayerPrefab(player);
+                status.Team = (status.PlayerNumber-1) % 2;
 
                 if (leftSide)
                     leftTeamPlayerStatuses.Add(status);

@@ -34,7 +34,7 @@ public class Ball : MonoBehaviour
 
     private Vector3 startPosition;
 
-    private Vector2 topDownPosition;
+    private Vector2 topDownDirection;
 
     private Vector3 currentPosition;
 
@@ -57,7 +57,7 @@ public class Ball : MonoBehaviour
         transform = gameObject.transform;
 
         currentPosition = new Vector3();
-        topDownPosition = new Vector2();
+        topDownDirection = new Vector2();
     }
 
     void Update()
@@ -73,9 +73,62 @@ public class Ball : MonoBehaviour
 
             if (pathProgress >= 1)
             {
-                moveAlongPath = false;
+                LandOnFloor();
             }
         }
+    }
+
+    private void LandOnFloor()
+    {
+        bounceCount++;
+
+        if (bounceCount > allowedBounces)
+        {
+            //then this player loses!
+            if (transform.position.x > 0)
+            {
+                TestHitBack();
+            }
+            else
+            {
+                GameManager.game.RespawnBalls(0);
+            }
+        }
+        else
+        {
+            //first check that we actually landed on the floor
+            if (transform.position.x > 0)
+            {
+                if (transform.position.x < GameManager.RightTeamEdge)
+                {
+                    GameManager.game.RespawnBalls(0);
+                }
+            }
+            else
+            {
+                if (transform.position.x > GameManager.LeftTeamEdge)
+                {
+                    GameManager.game.RespawnBalls(0);
+                }
+            }
+            //bounce!
+            SetBounceTarget();
+        }
+    }
+
+    private void SetBounceTarget()
+    {
+        float bounceDistance = 2 * (bounceCount / allowedBounces);
+        targetPosition.x = targetPosition.x + topDownDirection.x * bounceDistance;
+        targetPosition.z = targetPosition.z + topDownDirection.y * bounceDistance;
+        currentSpeed = speed * .75f;
+        apexHeight = 4;
+
+        startPosition = transform.position;
+
+        pathProgress = 0;
+        SetUnhittable(false);
+        moveAlongPath = true;
     }
 
     private void SetUnhittable(bool unhittable)
@@ -96,31 +149,65 @@ public class Ball : MonoBehaviour
         moveAlongPath = true;
     }
 
+    private void TestHitBack()
+    {
+        targetPosition.x = Random.Range(-13, GameManager.LeftTeamEdge);
+        targetPosition.z = Random.Range(-5, 5);
+        apexHeight = 4;
+
+        SetValuesOnHit();
+    }
+
     public void VolleyBall(PlayerStatus status)
     {
         if (unhittable)
         {
-
             return;
         }
-        SetUnhittable(true);
         SetColorByPlayer(status);
+
+        if (status.Team == 0)
+        {
+            targetPosition.x = 5;
+        }
+        else
+        {
+            targetPosition.x = -5;
+        }
+
+        targetPosition.z = 0;
+        apexHeight = 4;
+        SetValuesOnHit();
+
+    }
+
+    private void SetValuesOnHit()
+    {
+        SetUnhittable(true);
+
+        targetPosition.y = 0;
+
         moveAlongPath = true;
         pathProgress = 0;
 
-        targetPosition.x = 5;
-        targetPosition.y = 0;
-        targetPosition.z = 0;
-        apexHeight = 4;
-        speed = 1;
-        currentSpeed = 1;
+        bounceCount = 0;
+
+        speed += .05f;
+        currentSpeed = speed;
         startPosition = transform.position;
+
+        topDownDirection.x = targetPosition.x - startPosition.x;
+        topDownDirection.y = targetPosition.z - startPosition.z;
+
+        topDownDirection.Normalize();
+
         startPosition.y = 0;
     }
 
     public void Reset()
     {
-        speed = 0;
+        moveAlongPath = false;
+        speed = 1;
         bounceCount = 0;
         targetPosition = Vector3.zero;
     }

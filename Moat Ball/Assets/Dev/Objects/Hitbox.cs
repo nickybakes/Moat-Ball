@@ -10,6 +10,9 @@ public class Hitbox : MonoBehaviour
     [SerializeField]
     private MeshRenderer mesh;
 
+    [SerializeField]
+    private GameObject setVFX;
+
     private PlayerStatus status;
 
     public PlayerStatus Status
@@ -27,6 +30,23 @@ public class Hitbox : MonoBehaviour
     void Start()
     {
 
+    }
+
+    public void Disable()
+    {
+        setVFX.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public void EnableForHit()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void EnableForSet()
+    {
+        gameObject.SetActive(true);
+        setVFX.SetActive(true);
     }
 
     // Update is called once per frame
