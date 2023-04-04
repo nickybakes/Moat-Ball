@@ -221,6 +221,7 @@ MonoBehaviour:
   trail: {fileID: 4245823114070336685}
   modelHolder: {fileID: 971388442042205618}
   material: {fileID: 2100000, guid: 7f78f8794c59f574795ef35e52c5a516, type: 2}
+  unhittableVFX: {fileID: 971388441624014580}
 --- !u!54 &971388442259717850
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -12,12 +12,12 @@ public class PlayerStatus : MonoBehaviour
 {
 
     /// <summary>
-    /// starts at 0 (0 = player 1);
+    /// starts at 1 (1 = player 1);
     /// </summary>
     private int playerNumber = -1;
 
     /// <summary>
-    /// starts at 0 (0 = player 1);
+    /// starts at 1 (1 = player 1);
     /// </summary>
     public int PlayerNumber
     {
@@ -122,7 +122,7 @@ public class PlayerStatus : MonoBehaviour
         if (state.Current == PlayerState.Volley)
         {
             Debug.Log("Volley");
-
+            ball.VolleyBall(this);
         }
     }
 

@@ -7,7 +7,8 @@ public enum Tag
     Player,
     PickUp,
     UICursor,
-    Ball
+    Ball,
+    Floor
 }
 
 public class GameManager : MonoBehaviour
@@ -119,7 +120,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < balls.Count; i++)
         {
             balls[i].Reset();
-            balls[i].transform.position = new Vector3(leftTeamCenterX, 2, 0);
+            balls[i].transform.position = new Vector3(leftTeamCenterX, 1, 0);
         }
     }
 
