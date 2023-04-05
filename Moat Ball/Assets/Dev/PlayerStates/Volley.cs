@@ -6,7 +6,7 @@ public class Volley : BasicState
 {
     public Volley()
     {
-        sectionTimes = new float[] { 1f, .12f, .35f };
+        sectionTimes = new float[] { .75f, .05f, .25f };
         canPlayerControlMove = new bool[] { true, false };
         moveSpeedMultiplier = new float[] { .3f };
         canPlayerControlRotate = new bool[] { true };
@@ -30,7 +30,7 @@ public class Volley : BasicState
         switch (stats.sectionCurrent)
         {
             case (0):
-                stats.Status.ChargeAmount += Time.deltaTime;
+                stats.Status.ChargeAmount = stats.timeInSection/sectionTimes[0];
 
                 break;
 

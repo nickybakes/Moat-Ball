@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 647082498276266863}
   - component: {fileID: 862670408456343050}
   m_Layer: 0
-  m_Name: Volley Hitbox
+  m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,8 +423,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3238738258877582572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.194, z: 0.7}
-  m_LocalScale: {x: 2.5584147, y: 2.5584147, z: 2.5584147}
+  m_LocalPosition: {x: 0, y: 1.27, z: 0.85}
+  m_LocalScale: {x: 4.164076, y: 4.164076, z: 4.164076}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7873313697999361110}

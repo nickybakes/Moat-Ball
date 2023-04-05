@@ -67,7 +67,7 @@ public class Ball : MonoBehaviour
             pathProgress = Mathf.Min(pathProgress + (currentSpeed * Time.deltaTime), 1);
             currentPosition = transform.position;
             currentPosition.x = Mathf.Lerp(startPosition.x, targetPosition.x, pathProgress);
-            currentPosition.y = (-(Mathf.Pow((pathProgress * 2 - 1), 2)) + 1) * apexHeight + startPosition.y;
+            currentPosition.y = (-(Mathf.Pow((pathProgress * 2 - 1), 2)) + 1) * apexHeight + Mathf.Lerp(startPosition.y, targetPosition.y, pathProgress);
             currentPosition.z = Mathf.Lerp(startPosition.z, targetPosition.z, pathProgress);
             transform.position = currentPosition;
 
@@ -91,7 +91,8 @@ public class Ball : MonoBehaviour
             }
             else
             {
-                GameManager.game.RespawnBalls(0);
+                GameManager.game.EndRound(1);
+                return;
             }
         }
         else
@@ -99,16 +100,35 @@ public class Ball : MonoBehaviour
             //first check that we actually landed on the floor
             if (transform.position.x > 0)
             {
+                //right side but in water
                 if (transform.position.x < GameManager.RightTeamEdge)
                 {
-                    GameManager.game.RespawnBalls(0);
+                    if (bounceCount > 0)
+                    {
+                        GameManager.game.EndRound(0);
+                        return;
+                    }
+                    else
+                    {
+                        GameManager.game.EndRound(1);
+                        return;
+                    }
                 }
             }
             else
             {
                 if (transform.position.x > GameManager.LeftTeamEdge)
                 {
-                    GameManager.game.RespawnBalls(0);
+                    if (bounceCount > 0)
+                    {
+                        GameManager.game.EndRound(1);
+                        return;
+                    }
+                    else
+                    {
+                        GameManager.game.EndRound(0);
+                        return;
+                    }
                 }
             }
             //bounce!
@@ -118,7 +138,7 @@ public class Ball : MonoBehaviour
 
     private void SetBounceTarget()
     {
-        float bounceDistance = 2 * (bounceCount / allowedBounces);
+        float bounceDistance = 1.5f * (bounceCount / allowedBounces);
         targetPosition.x = targetPosition.x + topDownDirection.x * bounceDistance;
         targetPosition.z = targetPosition.z + topDownDirection.y * bounceDistance;
         currentSpeed = speed * .75f;
@@ -200,16 +220,19 @@ public class Ball : MonoBehaviour
         topDownDirection.y = targetPosition.z - startPosition.z;
 
         topDownDirection.Normalize();
-
-        startPosition.y = 0;
     }
 
-    public void Reset()
+    public void Reset(Vector3 spawnPosition)
     {
+        gameObject.SetActive(true);
+        SetUnhittable(false);
         moveAlongPath = false;
         speed = 1;
         bounceCount = 0;
-        targetPosition = Vector3.zero;
+        pathProgress = 0;
+        gameObject.transform.position = spawnPosition;
+        startPosition = spawnPosition;
+        targetPosition = spawnPosition;
     }
 
 

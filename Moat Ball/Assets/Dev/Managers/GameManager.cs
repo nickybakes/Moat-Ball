@@ -50,11 +50,11 @@ public class GameManager : MonoBehaviour
     private float leftTeamCenterX;
 
     public static float LeftTeamCenterX { get => game.leftTeamCenterX; }
-    public static float LeftTeamEdge {get => (game.leftTeamColumns[0].transform.position.x + game.columnWidth);}
+    public static float LeftTeamEdge { get => (game.leftTeamColumns[0].transform.position.x + game.columnWidth); }
 
     private float rightTeamCenterX;
     public static float RightTeamCenterX { get => game.rightTeamCenterX; }
-    public static float RightTeamEdge {get => (game.rightTeamColumns[0].transform.position.x - game.columnWidth);}
+    public static float RightTeamEdge { get => (game.rightTeamColumns[0].transform.position.x - game.columnWidth); }
 
 
     private int previousLoserTeam = 0;
@@ -121,12 +121,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void EndRound(int winningTeam)
+    {
+        StartCoroutine(EndRoundProcess(winningTeam));
+    }
+
+    private IEnumerator EndRoundProcess(int winningTeam)
+    {
+        for (int i = 0; i < balls.Count; i++)
+        {
+            balls[i].gameObject.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(1);
+
+        //remove floor columns
+
+        yield return new WaitForSeconds(1);
+
+        RespawnBalls(1 - winningTeam);
+    }
+
     public void RespawnBalls(int previousLoser)
     {
         for (int i = 0; i < balls.Count; i++)
         {
-            balls[i].Reset();
-            balls[i].transform.position = new Vector3(leftTeamCenterX, 1, 0);
+            balls[i].Reset(new Vector3(leftTeamCenterX, 1, 0));
         }
     }
 
@@ -200,7 +220,7 @@ public class GameManager : MonoBehaviour
 
                 GameObject player = Instantiate(playerPrefab);
                 PlayerStatus status = token.SetUpPlayerPrefab(player);
-                status.Team = (status.PlayerNumber-1) % 2;
+                status.Team = (status.PlayerNumber - 1) % 2;
 
                 if (leftSide)
                     leftTeamPlayerStatuses.Add(status);
