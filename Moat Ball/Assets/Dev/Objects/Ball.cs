@@ -31,6 +31,7 @@ public class Ball : MonoBehaviour
     private float pathProgress;
 
     private List<PlayerStatus> playersThatHaveSet;
+    private List<PlayerStatus> playersThatHaveVollied;
 
     private Vector3 startPosition;
 
@@ -51,6 +52,7 @@ public class Ball : MonoBehaviour
         trail.material = material;
 
         playersThatHaveSet = new List<PlayerStatus>(6);
+        playersThatHaveVollied = new List<PlayerStatus>(6);
 
         allowedBounces = AppManager.app.gameSettings.allowedBounces;
 
@@ -81,6 +83,7 @@ public class Ball : MonoBehaviour
     private void LandOnFloor()
     {
         bounceCount++;
+        playersThatHaveVollied.Clear();
 
         if (bounceCount > allowedBounces)
         {
@@ -149,6 +152,7 @@ public class Ball : MonoBehaviour
         pathProgress = 0;
         SetUnhittable(false);
         moveAlongPath = true;
+
     }
 
     private void SetUnhittable(bool unhittable)
@@ -207,6 +211,7 @@ public class Ball : MonoBehaviour
         apexHeight = 4;
         SetValuesOnHit();
         playersThatHaveSet.Clear();
+        playersThatHaveVollied.Add(status);
 
     }
 
@@ -242,6 +247,7 @@ public class Ball : MonoBehaviour
         gameObject.transform.position = spawnPosition;
         startPosition = spawnPosition;
         targetPosition = spawnPosition;
+        playersThatHaveSet.Clear();
     }
 
 

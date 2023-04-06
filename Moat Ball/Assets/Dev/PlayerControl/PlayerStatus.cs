@@ -144,8 +144,7 @@ public class PlayerStatus : MonoBehaviour
             ballImHitting = ball;
             state.SetStateImmediate(PlayerState.BallHit);
         }
-
-        if (state.Current == PlayerState.Set)
+        else if (state.Current == PlayerState.Set)
         {
             ballImHitting = ball;
             state.SetSection(1, 0);
