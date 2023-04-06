@@ -57,6 +57,8 @@ public class PlayerStatus : MonoBehaviour
 
     public Hitbox hitbox;
 
+    public Ball ballImHitting;
+
     private float chargeAmount;
 
     public float ChargeAmount
@@ -123,6 +125,11 @@ public class PlayerStatus : MonoBehaviour
             InputEndVolleyCharge();
         }
 
+        if (_input.GetInputRaw(ButtonInput.Set, true) && state.ActionAvailable(PlayerAction.Set) && CooldownDone(Cooldown.Attack))
+        {
+            Set();
+        }
+
         if (_input.GetInputRaw(ButtonInput.Dive, true) && state.ActionAvailable(PlayerAction.Dive) && CooldownDone(Cooldown.Dive))
         {
             Dive();
@@ -133,8 +140,16 @@ public class PlayerStatus : MonoBehaviour
     {
         if (state.Current == PlayerState.Volley)
         {
-            Debug.Log("Volley");
             ball.VolleyBall(this);
+            ballImHitting = ball;
+            state.SetStateImmediate(PlayerState.BallHit);
+        }
+
+        if (state.Current == PlayerState.Set)
+        {
+            ballImHitting = ball;
+            state.SetSection(1, 0);
+            ball.SetBall(this);
         }
     }
 
@@ -143,7 +158,12 @@ public class PlayerStatus : MonoBehaviour
         hitbox.EnableForHit();
     }
 
-    public void DisableVolleyHitbox()
+    public void EnableSetHitbox()
+    {
+        hitbox.EnableForSet();
+    }
+
+    public void DisableBallHitbox()
     {
         hitbox.Disable();
     }
@@ -156,6 +176,11 @@ public class PlayerStatus : MonoBehaviour
     public void InputEndVolleyCharge()
     {
         state.SetSection(1, 0);
+    }
+
+    public void Set()
+    {
+        state.SetStateImmediate(PlayerState.Set);
     }
 
     public void Dive()

@@ -6,7 +6,9 @@ public enum PlayerState
 {
     Idle,
     Dive,
-    Volley
+    Volley,
+    Set,
+    BallHit
 }
 
 public class StateManager
@@ -14,7 +16,9 @@ public class StateManager
     private static BasicState[] states = {
         new Idle(),
         new Dive(),
-        new Volley()
+        new Volley(),
+        new Set(),
+        new BallHit()
     };
 
     public static BasicState GetState(PlayerState state)

@@ -6,11 +6,11 @@ public class BallHit : BasicState
 {
     public BallHit()
     {
-        sectionTimes = new float[] { .75f, .05f, .25f };
-        canPlayerControlMove = new bool[] { true, false };
+        sectionTimes = new float[] { .75f, .15f };
+        canPlayerControlMove = new bool[] { false, false };
         moveSpeedMultiplier = new float[] { .3f };
         canPlayerControlRotate = new bool[] { true };
-        updateMovement = new bool[] { true, false, false };
+        updateMovement = new bool[] { false, true };
         alternateFriction = new bool[] { false };
         actionAvailable = new bool[][] {
             new bool[] { true, false, false, false, true },
@@ -19,7 +19,6 @@ public class BallHit : BasicState
         countCooldown = new bool[][] {
             new bool[] { false, false },
             };
-
 
 
         nextState = PlayerState.Idle;
@@ -48,7 +47,7 @@ public class BallHit : BasicState
     public override void OnExitThisState(PlayerState nextState, PlayerStateStats stats)
     {
         base.OnExitThisState(nextState, stats);
-        stats.Status.DisableVolleyHitbox();
+        stats.Status.DisableBallHitbox();
         stats.Status.RestartCooldown(Cooldown.Attack);
         if (nextState != PlayerState.Dive)
         {
@@ -76,7 +75,7 @@ public class BallHit : BasicState
 
             case (2):
                 stats.Status.ChargeAmount = 0;
-                stats.Status.DisableVolleyHitbox();
+                stats.Status.DisableBallHitbox();
                 stats.Status.Movement.SetTopDownVelocityToZero();
                 break;
         }

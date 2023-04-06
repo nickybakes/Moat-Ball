@@ -56,7 +56,7 @@ public class Dive : BasicState
         if (section == 1)
         {
             stats.Status.ChargeAmount = 0;
-            stats.Status.DisableVolleyHitbox();
+            stats.Status.DisableBallHitbox();
         }
     }
 }

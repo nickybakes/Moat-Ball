@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Volley : BasicState
+public class Set : BasicState
 {
-    public Volley()
+    public Set()
     {
-        sectionTimes = new float[] { .75f, .05f, .25f };
-        canPlayerControlMove = new bool[] { true, false };
+        sectionTimes = new float[] { .2f, .12f };
+        canPlayerControlMove = new bool[] { false, false };
         moveSpeedMultiplier = new float[] { .3f };
         canPlayerControlRotate = new bool[] { true };
-        updateMovement = new bool[] { true, false, false };
+        updateMovement = new bool[] { false, true };
         alternateFriction = new bool[] { false };
         actionAvailable = new bool[][] {
             new bool[] { true, false, false, false, true },
@@ -22,19 +22,12 @@ public class Volley : BasicState
 
         nextState = PlayerState.Idle;
 
-        stateText = "Volley";
+        stateText = "Set";
     }
 
     public override void Update(PlayerStateStats stats)
     {
-        switch (stats.sectionCurrent)
-        {
-            case (0):
-                stats.Status.ChargeAmount = stats.timeInSection/sectionTimes[0];
 
-                break;
-
-        }
     }
 
     public override void OnEnterThisState(PlayerState prevState, PlayerStateStats stats)
@@ -48,14 +41,7 @@ public class Volley : BasicState
         base.OnExitThisState(nextState, stats);
         stats.Status.DisableBallHitbox();
         stats.Status.RestartCooldown(Cooldown.Attack);
-        if (nextState != PlayerState.Dive)
-        {
-            stats.Status.ChargeAmount = 0;
-        }
-        else
-        {
-            stats.Status.EnableVolleyHitbox();
-        }
+        stats.Status.ChargeAmount = 0;
     }
 
     public override void SetSection(int section, int prevSection, PlayerStateStats stats)
@@ -63,16 +49,11 @@ public class Volley : BasicState
         switch (stats.sectionCurrent)
         {
             case (0):
-
-                break;
-
-            case (1):
-                stats.Status.ChargeAmount = 0;
-                stats.Status.EnableVolleyHitbox();
+                stats.Status.EnableSetHitbox();
                 stats.Status.Movement.SetTopDownVelocityToZero();
                 break;
 
-            case (2):
+            case (1):
                 stats.Status.ChargeAmount = 0;
                 stats.Status.DisableBallHitbox();
                 stats.Status.Movement.SetTopDownVelocityToZero();

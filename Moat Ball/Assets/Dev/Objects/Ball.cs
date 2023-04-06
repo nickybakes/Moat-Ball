@@ -164,9 +164,17 @@ public class Ball : MonoBehaviour
 
     public void SetBall(PlayerStatus status)
     {
+        if (playersThatHaveSet.Contains(status))
+        {
+            //hit stun them here
+
+            return;
+        }
         SetColorByPlayer(status);
         pathProgress = 0;
         moveAlongPath = true;
+        playersThatHaveSet.Add(status);
+        SetBounceTarget();
     }
 
     private void TestHitBack()
@@ -198,6 +206,7 @@ public class Ball : MonoBehaviour
         targetPosition.z = 0;
         apexHeight = 4;
         SetValuesOnHit();
+        playersThatHaveSet.Clear();
 
     }
 
