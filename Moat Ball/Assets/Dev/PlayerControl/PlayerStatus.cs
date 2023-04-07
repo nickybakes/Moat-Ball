@@ -57,7 +57,10 @@ public class PlayerStatus : MonoBehaviour
 
     public Hitbox hitbox;
 
+    [HideInInspector]
     public Ball ballImHitting;
+
+    public GameObject aimVisual;
 
     private float chargeAmount;
 
@@ -115,6 +118,11 @@ public class PlayerStatus : MonoBehaviour
                 cooldowns[i].Update();
         }
 
+        if (state.Current == PlayerState.BallHit && _input.GetInputRaw(ButtonInput.Volley, true) || _input.GetInputRaw(ButtonInput.Set, true) || _input.GetInputRaw(ButtonInput.Juke, true))
+        {
+            InputEndBallHit();
+        }
+
         if (_input.GetInputRaw(ButtonInput.Volley) && state.ActionAvailable(PlayerAction.Volley) && CooldownDone(Cooldown.Attack))
         {
             StartVolleyCharge();
@@ -140,7 +148,6 @@ public class PlayerStatus : MonoBehaviour
     {
         if (state.Current == PlayerState.Volley)
         {
-            ball.VolleyBall(this);
             ballImHitting = ball;
             state.SetStateImmediate(PlayerState.BallHit);
         }
@@ -173,6 +180,12 @@ public class PlayerStatus : MonoBehaviour
     }
 
     public void InputEndVolleyCharge()
+    {
+        state.SetSection(1, 0);
+    }
+
+
+    public void InputEndBallHit()
     {
         state.SetSection(1, 0);
     }

@@ -6,7 +6,7 @@ public class Volley : BasicState
 {
     public Volley()
     {
-        sectionTimes = new float[] { .75f, .05f, .25f };
+        sectionTimes = new float[] { .75f, .05f, .15f };
         canPlayerControlMove = new bool[] { true, false };
         moveSpeedMultiplier = new float[] { .3f };
         canPlayerControlRotate = new bool[] { true };
@@ -48,11 +48,11 @@ public class Volley : BasicState
         base.OnExitThisState(nextState, stats);
         stats.Status.DisableBallHitbox();
         stats.Status.RestartCooldown(Cooldown.Attack);
-        if (nextState != PlayerState.Dive)
+        if (nextState != PlayerState.Dive || nextState != PlayerState.BallHit)
         {
             stats.Status.ChargeAmount = 0;
         }
-        else
+        if (nextState == PlayerState.Dive)
         {
             stats.Status.EnableVolleyHitbox();
         }
@@ -60,7 +60,7 @@ public class Volley : BasicState
 
     public override void SetSection(int section, int prevSection, PlayerStateStats stats)
     {
-        switch (stats.sectionCurrent)
+        switch (section)
         {
             case (0):
 

@@ -45,7 +45,7 @@ public class Ball : MonoBehaviour
 
     private new Transform transform;
 
-    void Start()
+    void Awake()
     {
         material = new Material(material);
         mesh.material = material;
@@ -90,7 +90,7 @@ public class Ball : MonoBehaviour
             //then this player loses!
             if (transform.position.x > 0)
             {
-                TestHitBack();
+                GameManager.game.EndRound(0);
             }
             else
             {
@@ -198,14 +198,17 @@ public class Ball : MonoBehaviour
         }
         SetColorByPlayer(status);
 
-        if (status.Team == 0)
-        {
-            targetPosition.x = 5;
-        }
-        else
-        {
-            targetPosition.x = -5;
-        }
+        // if (status.Team == 0)
+        // {
+        //     targetPosition.x = status.aimVisual.transform.position.x;
+        // }
+        // else
+        // {
+        //     targetPosition.x = status.aimVisual.transform.position.x;
+        // }
+
+        targetPosition.x = status.aimVisual.transform.position.x;
+        targetPosition.z = status.aimVisual.transform.position.z;
 
         targetPosition.z = 0;
         apexHeight = 4;
